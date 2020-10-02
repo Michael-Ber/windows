@@ -1,40 +1,42 @@
-const modal = ({modalSelector, openSelector, closeSelector}) =>  {
-    const modal = document.querySelector(modalSelector),
-          openBtn = document.querySelector(openSelector),
-          closeBtn = modal.querySelector(closeSelector);
-    openBtn.addEventListener('click', (e) => openModal(modal, e));
-    closeBtn.addEventListener('click', () => closeModal(modal));
+const modals = () =>  {
+    function bindModal(modalSelector, openSelector, closeSelector) {
+        const modal = document.querySelector(modalSelector),
+              openBtn = document.querySelectorAll(openSelector),
+              closeBtn = modal.querySelector(closeSelector);
 
-    modal.addEventListener('click', (e) => {
-        if (e.target == modal) {
-            closeModal(modal);
-        }
-    });
+        openBtn.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = 'block';
+                document.body.overflow = 'hidden';
+            });
+        });
 
-    window.addEventListener('keydown', (e) => {
-        if (e.code == 'Escape') {
-            closeModal(modal);
-        }
-    });
-
-    if(modalSelector == '.popup') {
-        setTimeout(() => {
-            openModal(modal);
-        }, 60000);
-    }
-
-    function openModal(modal, e=1) {
-        if(e != 1) {
+        closeBtn.addEventListener('click', (e) => {
             e.preventDefault();
-        }
-        modal.classList.add('show');
-        modal.classList.remove('hide');
-    }
+            modal.style.display = 'none';
+            document.body.overflow = '';
+        });
 
-    function closeModal(modal) {
-            modal.classList.add('hide');
-            modal.classList.remove('show');
+        modal.addEventListener('click', (e) => {
+            if(e.target && e.target == modal) {
+                modal.style.display = 'none';
+                document.body.overflow = '';
+            }
+        });
+  
     }
     
-}
-export default modal;
+    function openModalByTime(selector, time) {
+        setTimeout(() => {
+            document.querySelector(selector).style.display = 'block';
+            document.body.overflow = 'hidden';
+        }, time);
+    }
+
+    openModalByTime('.popup', 60000);
+    bindModal('.popup_engineer', '.popup_engineer_btn', '.popup_close');
+    bindModal('.popup', '.phone_link','.popup_close');
+    
+};
+export default modals;
