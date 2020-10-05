@@ -16,15 +16,18 @@ const modals = () =>  {
             e.preventDefault();
             modal.style.display = 'none';
             document.body.overflow = '';
+  
         });
+
+
 
         modal.addEventListener('click', (e) => {
             if(e.target && e.target == modal) {
+                console.log(e.target);
                 modal.style.display = 'none';
                 document.body.overflow = '';
             }
         });
-  
     }
     
     function openModalByTime(selector, time) {
@@ -37,6 +40,5 @@ const modals = () =>  {
     openModalByTime('.popup', 60000);
     bindModal('.popup_engineer', '.popup_engineer_btn', '.popup_close');
     bindModal('.popup', '.phone_link','.popup_close');
-    
 };
 export default modals;
