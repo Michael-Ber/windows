@@ -1,31 +1,27 @@
+const openModal = (modalSelector) => {
+    modalSelector.style.display = 'block';
+    document.body.overflow = 'hidden';
+};
+
+const closeModal = (modalSelector) => {
+    modalSelector.style.display = 'none';
+    document.body.overflow = '';
+};
 const modals = () =>  {
-    function bindModal(modalSelector, openSelector, closeSelector) {
+    function bindModal(modalSelector, openSelector) {
         const modal = document.querySelector(modalSelector),
-              openBtn = document.querySelectorAll(openSelector),
-              closeBtn = modal.querySelector(closeSelector);
+              openBtn = document.querySelectorAll(openSelector);
 
         openBtn.forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
-                modal.style.display = 'block';
-                document.body.overflow = 'hidden';
+                openModal(modal);
             });
         });
 
-        closeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.style.display = 'none';
-            document.body.overflow = '';
-  
-        });
-
-
-
         modal.addEventListener('click', (e) => {
-            if(e.target && e.target == modal) {
-                console.log(e.target);
-                modal.style.display = 'none';
-                document.body.overflow = '';
+            if(e.target == modal || e.target.getAttribute('data-close') == '') {
+                closeModal(modal);
             }
         });
     }
@@ -38,7 +34,8 @@ const modals = () =>  {
     }
 
     openModalByTime('.popup', 60000);
-    bindModal('.popup_engineer', '.popup_engineer_btn', '.popup_close');
-    bindModal('.popup', '.phone_link','.popup_close');
+    bindModal('.popup_engineer', '.popup_engineer_btn');
+    bindModal('.popup', '.phone_link');
 };
 export default modals;
+export {openModal, closeModal};

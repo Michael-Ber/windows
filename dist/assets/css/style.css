@@ -17,6 +17,9 @@ body {
   display: block;
   color: red;
 }
+.statusMes {
+  margin: 40px;
+}
 
 a:hover {
   text-decoration: none;
@@ -486,7 +489,7 @@ textarea:focus {
   display: none;
 }
 
-.glazing a.active {
+.glazing .active a {
   text-decoration: none;
   color: #454545;
 }

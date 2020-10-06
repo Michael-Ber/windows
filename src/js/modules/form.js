@@ -1,4 +1,5 @@
 import postData from "../services/postData";
+import {openModal, closeModal} from "./modal";
 
 const form = () => {
     const messageBox = {
@@ -7,19 +8,27 @@ const form = () => {
         failure: "Что-то пошло не так"
     };
     function bindPostData(formSelector) {
-        const form = document.querySelectorAll(formSelector);
-    
-        form.forEach(form => {
+        const form = document.querySelectorAll(formSelector),
+              inputs = document.querySelectorAll('input'),
+              phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+        
+        phoneInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                input.value = input.value.replace(/\D/ig, '');
+            });
             
+        });
+
+        form.forEach(form => {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-
-                let div = document.createElement('div');
-                div.classList.add('form_loading');
-                div.innerHTML = `
+                
+                let statusMessage = document.createElement('div');
+                statusMessage.classList.add('form_loading');
+                statusMessage.innerHTML = `
                     <img src=${messageBox.loading}>
                 `;
-                form.append(div);
+                form.append(statusMessage);
 
                 const formData = new FormData(form);
 
@@ -27,41 +36,43 @@ const form = () => {
                     .then(data => data.text())
                     .then(data => {
                         console.log(data);
-                        form.removeChild(div);
                         showThanksModal('.popup', messageBox.success);
                         showThanksModal('.popup_engineer', messageBox.success);
                     })
                     .catch(() => {
-                        console.log('error');
                         showThanksModal('.popup', messageBox.failure);
                         showThanksModal('.popup_engineer', messageBox.failure);
                     })
                     .finally(() => {
                         form.reset();
+                        form.removeChild(statusMessage);
                     });
             });
-            
         });
     }
 
     function showThanksModal(parentSelector, message) {
         const parElement = document.querySelector(parentSelector);
         const prevModalDialog = parElement.querySelector('.popup_dialog');
+        openModal(document.querySelector('.popup_engineer'));
         prevModalDialog.style.display = 'none';
-        let div = document.createElement('div');
-        div.classList.add('popup_dialog');
-        div.innerHTML = `
+        let thanksModal = document.createElement('div');
+        thanksModal.classList.add('popup_dialog');
+        thanksModal.innerHTML = `
             <div class="popup_content text-center">
-                <button type="button" class="popup_close"><strong>&times;</strong></button>
-                <h2>${message}</h2>
+                <button type="button" class="popup_close"><strong data-close>&times;</strong></button>
+                <h3 class="statusMes">${message}</h3>
             </div>
         `;
-        document.querySelector(parentSelector).append(div);
+        document.querySelector(parentSelector).append(thanksModal);
         setTimeout(() => {
             prevModalDialog.style.display = 'block';
-            document.querySelector(parentSelector).removeChild(div);
-        }, 15000);
+            closeModal(document.querySelector('.popup'));
+            closeModal(document.querySelector('.popup_engineer'));
+            document.querySelector(parentSelector).removeChild(thanksModal);
+        }, 3000);
     }
+    
     bindPostData('form');
 };
 
