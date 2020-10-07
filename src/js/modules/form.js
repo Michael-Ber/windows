@@ -38,10 +38,12 @@ const form = () => {
                         console.log(data);
                         showThanksModal('.popup', messageBox.success);
                         showThanksModal('.popup_engineer', messageBox.success);
+                        showThanksModal('.popup_calc_end', messageBox.success);
                     })
                     .catch(() => {
                         showThanksModal('.popup', messageBox.failure);
                         showThanksModal('.popup_engineer', messageBox.failure);
+                        showThanksModal('.popup_calc_end', messageBox.failure);
                     })
                     .finally(() => {
                         form.reset();

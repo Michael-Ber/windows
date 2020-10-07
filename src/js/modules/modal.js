@@ -1,10 +1,10 @@
-const openModal = (modalSelector) => {
-    modalSelector.style.display = 'block';
+const openModal = (modalElement) => {
+    modalElement.style.display = 'block';
     document.body.overflow = 'hidden';
 };
 
-const closeModal = (modalSelector) => {
-    modalSelector.style.display = 'none';
+const closeModal = (modalElement) => {
+    modalElement.style.display = 'none';
     document.body.overflow = '';
 };
 const modals = () =>  {
@@ -33,7 +33,7 @@ const modals = () =>  {
         }, time);
     }
 
-    openModalByTime('.popup', 60000);
+    // openModalByTime('.popup', 60000);
     bindModal('.popup_engineer', '.popup_engineer_btn');
     bindModal('.popup', '.phone_link');
 };
