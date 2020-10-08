@@ -932,7 +932,7 @@ textarea:focus {
 
 .popup_calc_content .big_img img {
   display: none;
-  margin: 0 auto 3rem auto;
+  margin-bottom: 3rem;
   width: 30rem;
 }
 
