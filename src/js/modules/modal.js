@@ -1,6 +1,6 @@
 import resetInputs from "./resetInputs";
 
-const modals = (enable, submitted) =>  {
+const modals = (enable) =>  {
     console.log(enable);
     const bindModal = (modalSelector, openSelector, enable, clickToOverlay = true) => {
         const modal = document.querySelector(modalSelector),
@@ -44,7 +44,6 @@ const modals = (enable, submitted) =>  {
             }
         });
 
-        closeModalWhenSubmitted(windows);
         
     };
 
@@ -71,14 +70,7 @@ const modals = (enable, submitted) =>  {
         }, time);
     }
 
-    function closeModalWhenSubmitted(modal) {
-        console.log(submitted);
-        if(submitted) {
-            modal.forEach(window => {
-                closeModal(window);
-            });
-        }
-    }
+    
 
 
     // openModalByTime('.popup', 60000);
@@ -89,5 +81,15 @@ const modals = (enable, submitted) =>  {
     bindModal('.popup_calc_end', '.popup_calc_profile_button', enable, false);
 };
 
+function closeModalWhenSubmitted(modalElement) {
+    setTimeout(() => {
+        modalElement.forEach(window => {
+            window.style.display = 'none';
+            document.body.overflow = '';
+        });
+    }, 3000);
+    
+}
 
 export default modals;
+export {closeModalWhenSubmitted};

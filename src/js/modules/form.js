@@ -1,9 +1,9 @@
 
 import postData from "../services/postData";
+import {closeModalWhenSubmitted} from "./modal";
 
 
-
-const form = (select, enable, submitted) => {
+const form = (select, enable) => {
     const messageBox = {
         success: "Спасибо, скоро мы с вами свяжемся",
         loading: "Идет загрузка",
@@ -50,7 +50,7 @@ const form = (select, enable, submitted) => {
                     .finally(() => {
                         form.reset();
                         removeStatus(form);
-                        submitted = true;
+                        closeModalWhenSubmitted(document.querySelectorAll('[data-modal]'));
                     });
             });
         });
