@@ -55,18 +55,18 @@ const modals = (enable) =>  {
     function openModal(modalElement){
         
         modalElement.style.display = 'block';
-        document.body.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
     }
     
     function closeModal(modalElement){
         modalElement.style.display = 'none';
-        document.body.overflow = '';
+        document.body.style.overflow = '';
     }
     
     function openModalByTime(selector, time) {
         setTimeout(() => {
             document.querySelector(selector).style.display = 'block';
-            document.body.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
         }, time);
     }
 
@@ -85,7 +85,7 @@ function closeModalWhenSubmitted(modalElement) {
     setTimeout(() => {
         modalElement.forEach(window => {
             window.style.display = 'none';
-            document.body.overflow = '';
+            document.body.style.overflow = '';
         });
     }, 3000);
     
