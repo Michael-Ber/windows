@@ -29,19 +29,16 @@ const changeModalSelect = (select, enable) => {
         }
     });
 
-    function bindWindowData(elem, event, prop, checking = 'do_image_more') {
+    function bindWindowData(elem, event, prop) {
         elem.forEach((item, i) => {
             
             item.addEventListener(event, () => {
                 switch(item.nodeName) {
                     case 'SPAN' :
-                        
                         enable.perm1 = true;
                         select[prop] = i;
-                        console.log(enable);
-                        
-                        
                         break;
+
                     case 'INPUT' :
                         if(item.getAttribute('type') == 'checkbox') {
                             i === 0 ? select[prop] = "Холодное" : select[prop] = "Теплое";
@@ -50,14 +47,13 @@ const changeModalSelect = (select, enable) => {
                                 if(i == j) {
                                     element.checked = true;
                                     enable.perm4 = true;
-                                    console.log(enable);
                                 }
                             });
                         }else {
                             select[prop] = item.value;
-                            
                         }
                         break;
+
                     case 'SELECT' :
                         select[prop] = item.value;
                         break;   
@@ -72,16 +68,11 @@ const changeModalSelect = (select, enable) => {
                 item.value = item.value.replace(/\D/ig, "");
                 if(item.value) {
                     enable[enableProp] = true;
-                    console.log(enable);
                 }
             });
             
         }); 
     }
-    
-    
-
-
 };
 
 export default changeModalSelect;

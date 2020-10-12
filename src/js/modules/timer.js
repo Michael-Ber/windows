@@ -44,12 +44,7 @@ const timer = (id, deadline) => {
                 minutes.textContent = t.minutes < 10 ? '0' + t.minutes : t.minutes;
                 seconds.textContent = t.seconds < 10 ? '0' + t.seconds : t.seconds;
             }
-            
         }
-    }
-
-    function addZero(elem) {
-
     }
 
     setTimeToPage(id);

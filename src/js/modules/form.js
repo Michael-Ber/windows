@@ -30,7 +30,6 @@ const form = (select, enable) => {
                 
                 const formData = new FormData(form);
                 if(form.getAttribute('data-end') == '') {
-                    console.log(enable);
                     for(let key in select) {
                         formData.append(key, select[key]);
                     }

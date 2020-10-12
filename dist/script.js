@@ -17866,14 +17866,12 @@ var changeModalSelect = function changeModalSelect(select, enable) {
   });
 
   function bindWindowData(elem, event, prop) {
-    var checking = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'do_image_more';
     elem.forEach(function (item, i) {
       item.addEventListener(event, function () {
         switch (item.nodeName) {
           case 'SPAN':
             enable.perm1 = true;
             select[prop] = i;
-            console.log(enable);
             break;
 
           case 'INPUT':
@@ -17885,7 +17883,6 @@ var changeModalSelect = function changeModalSelect(select, enable) {
                 if (i == j) {
                   element.checked = true;
                   enable.perm4 = true;
-                  console.log(enable);
                 }
               });
             } else {
@@ -17909,7 +17906,6 @@ var changeModalSelect = function changeModalSelect(select, enable) {
 
         if (item.value) {
           enable[enableProp] = true;
-          console.log(enable);
         }
       });
     });
@@ -17972,8 +17968,6 @@ var form = function form(select, enable) {
         var formData = new FormData(form);
 
         if (form.getAttribute('data-end') == '') {
-          console.log(enable);
-
           for (var key in select) {
             formData.append(key, select[key]);
           }
@@ -18100,9 +18094,9 @@ var modals = function modals(enable) {
       document.querySelector(selector).style.display = 'block';
       document.body.style.overflow = 'hidden';
     }, time);
-  } // openModalByTime('.popup', 60000);
+  }
 
-
+  openModalByTime('.popup', 60000);
   bindModal('.popup_engineer', '.popup_engineer_btn', null);
   bindModal('.popup', '.phone_link', null);
   bindModal('.popup_calc', '.glazing_price_btn', null);
@@ -18262,8 +18256,6 @@ var timer = function timer(id, deadline) {
     }
   }
 
-  function addZero(elem) {}
-
   setTimeToPage(id);
 };
 
@@ -18281,67 +18273,59 @@ var timer = function timer(id, deadline) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var works = function works() {
+  var imgParent = document.querySelector('.works');
   var workSpace = document.createElement('div'),
-      imgWrapper = document.createElement('div'),
-      bigImg = document.createElement('img'),
-      imgParent = document.querySelector('.works');
-  var imgWidth, imgHeight;
-  workSpace.classList.add('popup');
-  workSpace.style.cssText = "\n        display: none;\n        justify-content: center;\n        align-items: center;\n    ";
-  bigImg.style.cssText = "\n        margin-bottom: 0;\n        width: 100%;\n    ";
-  imgWrapper.append(bigImg);
-  workSpace.append(imgWrapper);
-  imgParent.append(workSpace);
+      bigImg = document.createElement('img');
+  var i = 1;
   imgParent.addEventListener('click', function (e) {
     e.preventDefault();
     var target = e.target;
 
-    if (target && target.classList.contains('preview')) {
-      var path = target.parentNode.getAttribute('href');
-      bigImg.setAttribute('src', path); // imgWidth = window.getComputedStyle(bigImg).width;
-      // imgHeight = window.getComputedStyle(bigImg).height;
+    if (i < 2) {
+      i++;
+      workSpace.classList.add('popup');
+      workSpace.style.cssText = "\n                display: none;\n                justify-content: center;\n                align-items: center;\n            ";
+      bigImg.style.cssText = "\n                margin-bottom: 0;\n                object-fit: cover;\n            ";
 
-      console.log(imgWidth, imgHeight); // imgWrapper.style.width = imgWidth + 'px';
-      // imgWrapper.style.height = imgHeight + 'px';
+      var adaptationImg = function adaptationImg(widthValue) {
+        if (window.matchMedia('(max-width: 991px)').matches) {
+          bigImg.style.maxWidth = 600 + 'px';
+        }
 
-      workSpace.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+        if (window.matchMedia('(max-width: 767px)').matches) {
+          bigImg.style.maxWidth = 420 + 'px';
+        }
+
+        if (window.matchMedia('(max-width: 530px)').matches) {
+          bigImg.style.maxWidth = 300 + 'px';
+        }
+
+        if (window.matchMedia('(min-width: 992px)').matches) {
+          bigImg.style.maxWidth = 'unset';
+        }
+      };
+
+      adaptationImg();
+      window.addEventListener('resize', function () {
+        adaptationImg();
+      });
+      workSpace.append(bigImg);
+      imgParent.append(workSpace);
+
+      if (target && target.classList.contains('preview')) {
+        var path = target.parentNode.getAttribute('href');
+        bigImg.setAttribute('src', path);
+        workSpace.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    } else {
+      if (target.classList.contains('popup')) {
+        workSpace.remove();
+        document.body.style.overflow = '';
+        i = 1;
+      }
     }
-
-    if (target && target.classList.contains('popup')) {
-      workSpace.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-  }); // if(window.matchMedia('(max-width: 767px)').matches) {
-  // let bigImgWrapper, bigImg, i=1;
-  // images.forEach(item => {
-  //     item.addEventListener('click', (e) => {
-  //         e.preventDefault();
-  //         if(i < 2) {
-  //             i++;
-  //             bigImgWrapper = document.createElement('div');
-  //             bigImgWrapper.classList.add('overlay');
-  //             bigImgWrapper.style.display = 'block';
-  //             bigImg = document.createElement('img');
-  //             bigImg.style.cssText = `
-  //                 position: fixed;
-  //                 top: 50%;
-  //                 left: 50%;
-  //                 transform: translate(-50%, -50%);
-  //                 width: 100%;
-  //             `;
-  //             bigImg.src = e.target.parentNode.getAttribute('href');
-  //             bigImgWrapper.append(bigImg);
-  //             item.append(bigImgWrapper);
-  //         }else {
-  //             if(e.target.classList.contains('overlay')) {
-  //                 bigImgWrapper.remove();
-  //                 i=1;
-  //                 console.log('here');
-  //             } 
-  //         }
-  //     });
-  // });
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (works);

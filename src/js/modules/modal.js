@@ -73,7 +73,7 @@ const modals = (enable) =>  {
     
 
 
-    // openModalByTime('.popup', 60000);
+    openModalByTime('.popup', 60000);
     bindModal('.popup_engineer', '.popup_engineer_btn', null);
     bindModal('.popup', '.phone_link', null);
     bindModal('.popup_calc', '.glazing_price_btn', null);
