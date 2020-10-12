@@ -1815,6 +1815,21 @@ textarea:focus {
   display: none;
 }
 
+@keyframes fadeInMy {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.faded {
+  animation-name: fadeInMy;
+  animation-duration: 1s;
+}
+
+
 /* small devices, tablets */
 @media only screen and (max-width: 768px) {
   .animated {
